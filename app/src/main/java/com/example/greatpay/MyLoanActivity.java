@@ -87,7 +87,7 @@ public class MyLoanActivity extends AppCompatActivity {
                              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                                        for (DataSnapshot ds:dataSnapshot.getChildren()){
-                                           ruser=""+ds.child("username").getValue();
+                                           ruser=""+ds.child("name").getValue();
                                            url=""+ds.child("image").getValue();
 
 

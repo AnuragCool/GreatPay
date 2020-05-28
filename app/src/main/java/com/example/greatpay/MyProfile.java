@@ -61,6 +61,7 @@ public class MyProfile extends AppCompatActivity {
     private String email,username1,phone,namee,url,addrs;
     boolean selected =false;
     private Button update;
+    String state,myusername;
     FirebaseStorage storage;
     StorageReference storageReference;
     private ImageView select;
@@ -79,7 +80,6 @@ public class MyProfile extends AppCompatActivity {
         storageReference = storage.getReference();
 
         name=findViewById(R.id.pro_name);
-        username=findViewById(R.id.pro_username);
         mobile=findViewById(R.id.pro_phone);
         emailTv=findViewById(R.id.pro_email);
         address=findViewById(R.id.pro_address);
@@ -90,6 +90,23 @@ public class MyProfile extends AppCompatActivity {
         imageView=findViewById(R.id.p_images);
         update.setVisibility(View.GONE);
         ref= FirebaseDatabase.getInstance().getReference("Users");
+
+
+
+
+        ref.orderByChild("uId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot ds1) {
+                for(DataSnapshot dataSnapshot1:ds1.getChildren()){
+                    myusername=""+dataSnapshot1.child("username").getValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -110,45 +127,48 @@ public class MyProfile extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String addresss=address.getText().toString().trim();
-                String Name=name.getText().toString().trim();
-                String phone=mobile.getText().toString().trim();
-                String UserName=username.getText().toString().trim();
-                HashMap<String,Object> hashMap=new HashMap<>();
-                hashMap.put("address",addresss);
-                hashMap.put("name",Name);
-                hashMap.put("phone",phone);
-                hashMap.put("username",UserName);
-                ref.child(user.getUid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(MyProfile.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                Drawable d = getResources().getDrawable(profile_edittext);
-                name.setEnabled(false);
-                username.setEnabled(false);
-                address.setEnabled(false);
-                mobile.setEnabled(false);
-                selected=false;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    name.setBackground(d);
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    username.setBackground(d);
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    address.setBackground(d);
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    mobile.setBackground(d);
-                }
-                edit.setText("Edit Profile");
-                edit.setTextColor(Color.WHITE);
-                update.setVisibility(View.GONE);
-                loadProfile();
+                state="Not";
+
+                final String addresss=address.getText().toString().trim();
+                final String Name=name.getText().toString().trim();
+                final String phone=mobile.getText().toString().trim();
+                final String UserName=username.getText().toString().trim();
+
+
+
+                            HashMap<String,Object> hashMap=new HashMap<>();
+                            hashMap.put("address",addresss);
+                            hashMap.put("name",Name);
+                            hashMap.put("phone",phone);
+                            ref.child(user.getUid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(MyProfile.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            Drawable d = getResources().getDrawable(profile_edittext);
+                            name.setEnabled(false);
+                            address.setEnabled(false);
+                            mobile.setEnabled(false);
+                            selected=false;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                name.setBackground(d);
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                address.setBackground(d);
+                            }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                mobile.setBackground(d);
+                            }
+                            edit.setText("Edit Profile");
+                            edit.setTextColor(Color.WHITE);
+                            update.setVisibility(View.GONE);
+                            loadProfile();
+
+
+
 
 
             }
@@ -168,15 +188,11 @@ public class MyProfile extends AppCompatActivity {
                 if(selected){
                     Drawable d = getResources().getDrawable(profile_edittext);
                     name.setEnabled(false);
-                    username.setEnabled(false);
                     address.setEnabled(false);
                     mobile.setEnabled(false);
                     selected=false;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         name.setBackground(d);
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        username.setBackground(d);
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         address.setBackground(d);
@@ -195,16 +211,12 @@ public class MyProfile extends AppCompatActivity {
                         name.setBackground(d);
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        username.setBackground(d);
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         address.setBackground(d);
                     }
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         mobile.setBackground(d);
                     }
                     name.setEnabled(true);
-                    username.setEnabled(true);
                     address.setEnabled(true);
                     mobile.setEnabled(true);
                     edit.setText("Cancel");
@@ -220,28 +232,26 @@ public class MyProfile extends AppCompatActivity {
     private void loadProfile() {
         ref.orderByChild("uId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    String email=""+ds.child("email").getValue();
-                    String username1=""+ds.child("username").getValue();
-                    String phone=""+ds.child("phone").getValue();
-                    String namee=""+ds.child("name").getValue();
-                    String addrs=""+ds.child("address").getValue();
-                    String url=""+ds.child("image").getValue();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                for(DataSnapshot ds2: dataSnapshot1.getChildren()){
+                    String email=""+ds2.child("email").getValue();
+                    String phone=""+ds2.child("phone").getValue();
+                    String namee=""+ds2.child("name").getValue();
+                    String addrs=""+ds2.child("address").getValue();
+                    String url=""+ds2.child("image").getValue();
 
                     name.setText(namee);
                     emailTv.setText(email);
-                    username.setText(username1);
                     mobile.setText(phone);
-                    nameTv.setText(username1);
+                    nameTv.setText(namee);
 
                     Log.d("url", "onDataChange: "+url);
 
                     if(!addrs.isEmpty()){
                         address.setText(addrs);
                     }
-                    if(url!=null){
-                        Glide.with(MyProfile.this).load(url).placeholder(R.drawable.profile).into(imageView);
+                    if(!url.isEmpty()){
+                        Glide.with(getApplicationContext()).load(url).placeholder(R.drawable.profile).into(imageView);
                     }
 
                 }

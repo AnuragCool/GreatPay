@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -41,6 +42,7 @@ public class HomePage extends AppCompatActivity  {
     FirebaseUser user;
     TextView em, na;
     DatabaseReference ref;
+    FloatingActionButton floatingActionButton;
     String my_Uid;
 
     private CardView my_loan, profile, settings, summary;
@@ -53,11 +55,23 @@ public class HomePage extends AppCompatActivity  {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        floatingActionButton=findViewById(R.id.signout);
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
         checkUser();
+
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user = mAuth.getCurrentUser();
+                mAuth.signOut();
+                checkUser();
+
+            }
+        });
 
 
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);

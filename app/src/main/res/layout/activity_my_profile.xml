@@ -92,42 +92,6 @@
                     android:textSize="18sp"
                     android:layout_marginLeft="10dp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="15dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/person1" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:text="User name"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/regular"
-                        android:textColor="#000"
-                        android:layout_marginLeft="8dp"
-                        />
-
-                </LinearLayout>
-                <EditText
-                    android:id="@+id/pro_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="15dp"
-                    android:inputType="text"
-                    android:enabled="false"
-                    android:textColor="#fff"
-                    android:paddingLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="15dp"
-                    android:textSize="16sp"
-                    android:background="@drawable/profile_edittext"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

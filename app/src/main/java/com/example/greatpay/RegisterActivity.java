@@ -38,9 +38,7 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
     private Button register;
-    private EditText username,name,email,mobile,pass,cnf_pass,gender;
-    private RadioGroup radioGroup;
-    private RadioButton radioButton1, radioButton2;
+    private EditText name,email,mobile,pass,cnf_pass;
     private CheckBox privacy;
     AwesomeValidation awesomeValidation;
     private FirebaseAuth mAuth;
@@ -53,17 +51,13 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        username=findViewById(R.id.reg_username);
+
         name=findViewById(R.id.reg_name);
         email=findViewById(R.id.reg_email);
         mobile=findViewById(R.id.reg_phone);
         pass=findViewById(R.id.reg_password);
         cnf_pass=findViewById(R.id.reg_cnf_password);
         register=findViewById(R.id.register_button);
-        radioGroup=findViewById(R.id.radio_grp1);
-
-        radioButton1=findViewById(R.id.reg_male);
-        radioButton2=findViewById(R.id.reg_female);
         progressBar=findViewById(R.id.register_progressBar);
 
         mAuth=FirebaseAuth.getInstance();
@@ -86,8 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Patterns.EMAIL_ADDRESS,R.string.invalid_email);
 
         //for username
-        awesomeValidation.addValidation(this,R.id.reg_username,
-        RegexTemplate.NOT_EMPTY,R.string.invalid_username);
+
 
         //for password
         awesomeValidation.addValidation(this,R.id.reg_password,
@@ -103,13 +96,6 @@ public class RegisterActivity extends AppCompatActivity {
                 hideKeyboard(v);
                 progressBar.setVisibility(View.VISIBLE);
 
-                    String gender = "";
-
-                    if (radioButton1.isChecked()) {
-                        gender = "Male";
-                    } else {
-                        gender = "Female";
-                    }
 
                     String checkbox="";
                     if(privacy.isChecked()){
@@ -120,7 +106,6 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     final String Name = name.getText().toString();
                     final String Email = email.getText().toString();
-                    final String UserName = username.getText().toString();
                     final String phone = mobile.getText().toString();
                     final String password = pass.getText().toString();
                     final String cnf_password = cnf_pass.getText().toString();
@@ -129,29 +114,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //check Validation
                 if (awesomeValidation.validate()) {
-                    if(!radioButton1.isChecked() && !radioButton2.isChecked()){
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(),"Select gender",Toast.LENGTH_SHORT).show();
-                    }
-                    else if(!privacy.isChecked())
+                    if(!privacy.isChecked())
                     {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(),"not checked privacy",Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        final String finalGender = gender;
-                        final DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users");
-                        reference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                 if(checkRuserName(UserName,dataSnapshot)){
-                                     username.setError("Username Exists! Try Another");
-                                     username.setFocusable(true);
-                                     progressBar.setVisibility(View.INVISIBLE);
-                                 }else{
-
-
-                                     mAuth.createUserWithEmailAndPassword(Email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//
+                        mAuth.createUserWithEmailAndPassword(Email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                          @Override
                                          public void onComplete(@NonNull Task<AuthResult> task) {
                                              progressBar.setVisibility(View.GONE);
@@ -168,8 +138,6 @@ public class RegisterActivity extends AppCompatActivity {
                                                              hashMap.put("name",Name);
                                                              hashMap.put("email",Email);
                                                              hashMap.put("phone",phone);
-                                                             hashMap.put("username",UserName);
-                                                             hashMap.put("gender", finalGender);
                                                              hashMap.put("uId",user.getUid());
                                                              databaseReference.child(user.getUid()).setValue(hashMap);
 
@@ -187,21 +155,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                                          }
                                      });
-                                 }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
                         //on Success
 
                     }
-//
-//                startActivity(new Intent(getApplicationContext(),HomePage.class));
-//                finish();
                 }
             }
         });
@@ -211,18 +167,6 @@ public class RegisterActivity extends AppCompatActivity {
         InputMethodManager inputMethodManager= (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(),0);
     }
-    private boolean checkRuserName(final String ruser, DataSnapshot dataSnapshot) {
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            String username = "" + ds.child("username").getValue();
-            Log.d("name", "checkRuserName: "+username);
-            if (ruser.equals(username)) {
-                return true;
 
-            }
-
-
-        }
-        return  false;
-    }
 
 }
