@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "604472926092",
+    "firebase_url": "https://great-pay.firebaseio.com",
+    "project_id": "great-pay",
+    "storage_bucket": "great-pay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604472926092:android:48e24d514a9063b46b40a9",
+        "android_client_info": {
+          "package_name": "com.example.greatpay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604472926092-inaujapunlae6llnqpm71mau60t5r92q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.greatpay",
+            "certificate_hash": "d795f10708f5b16b7357d38d74f50ef450a28656"
+          }
+        },
+        {
+          "client_id": "604472926092-q1jo7fu1b8oq7ji9t6pggftig4bem2ra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSyAwBL-3WJLHUGX_5xJAACeJ1skG6snM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604472926092-q1jo7fu1b8oq7ji9t6pggftig4bem2ra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,199 @@
+package com.example.greatpay;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    Toolbar toolbar;
+    NavigationView navigationView;
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+    TextView em,na;
+    DatabaseReference ref;
+    String my_Uid;
+
+    private CardView my_loan, profile,settings,summary;
+    View hView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_page);
+        toolbar=findViewById(R.id.toolbar);
+
+
+
+
+        mAuth=FirebaseAuth.getInstance();
+        user=mAuth.getCurrentUser();
+
+        checkUser();
+
+        drawerLayout=findViewById(R.id.drawer);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggle.syncState();
+        navigationView=findViewById(R.id.navigationView);
+        hView=navigationView.getHeaderView(0);
+        na=hView.findViewById(R.id.header_name);
+        em=hView.findViewById(R.id.header_email);
+        navigationView.setNavigationItemSelectedListener(this);
+        //navigationView.setCheckedItem(R.id.reg_phone);
+
+
+
+
+        if(user!=null){
+            my_Uid=user.getUid();
+            ref= FirebaseDatabase.getInstance().getReference("Users");
+            ref.orderByChild("uId").equalTo(my_Uid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds: dataSnapshot.getChildren()){
+                        String email=""+ds.child("email").getValue();
+                        String username=""+ds.child("username").getValue();
+                        Log.d("test", "onDataChange: "+email+username);
+                        em.setText(email);
+                        na.setText(username);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+        my_loan=findViewById(R.id.card5);
+
+        my_loan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this,MyLoanActivity.class));
+            }
+        });
+
+        settings=findViewById(R.id.card3);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this,SettingsActivity.class));
+            }
+        });
+
+        profile=findViewById(R.id.card4);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this,MyProfile.class));
+            }
+        });
+
+        settings=findViewById(R.id.card6);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this,SummaryActivity.class));
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+    }
+
+    private void checkUser() {
+        user=mAuth.getCurrentUser();
+        if(user!=null){
+            if(!user.isEmailVerified()){
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                finish();
+                Toast.makeText(getApplicationContext(),"Please verify your email",Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finish();
+        }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mymenu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        switch (id)
+        {
+            case R.id.about:
+                startActivity(new Intent(getApplicationContext(),AboutUsActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
+    {
+        int id=menuItem.getItemId();
+        switch(id) {
+            case R.id.my_loans:
+                startActivity(new Intent(getApplicationContext(),MyLoanActivity.class));
+                break;
+            case R.id.home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new HomeFragment()).commit();
+                getSupportActionBar().setTitle("Great Pay");
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
+                break;
+            case R.id.logout:
+                mAuth.signOut();
+                checkUser();
+                break;
+            case R.id.settings:
+                startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+}

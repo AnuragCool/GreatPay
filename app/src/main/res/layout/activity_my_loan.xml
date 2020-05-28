@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:background="@color/colorPrimary"
+        android:id="@+id/rlayout"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MyLoanActivity">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_loan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp" />
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/myloan_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            app:menu_fab_size="normal"
+            app:menu_showShadow="true"
+            app:menu_colorNormal="#000"
+            app:menu_shadowColor="#000"
+            app:menu_shadowRadius="4dp"
+            app:menu_shadowXOffset="1dp"
+            app:menu_shadowYOffset="3dp">
+
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/f_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/edit"
+                app:fab_colorNormal="#000"
+                app:fab_size="mini"
+                app:fab_label="Add" />
+
+        </com.github.clans.fab.FloatingActionMenu>
+
+    </RelativeLayout>
