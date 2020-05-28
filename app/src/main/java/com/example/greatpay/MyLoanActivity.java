@@ -34,6 +34,7 @@ public class MyLoanActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
     String mail,ruser;
+    String url;
     private FirebaseUser user;
     private LoanAdapter loanAdapter;
     private Button edit_btn;
@@ -48,14 +49,7 @@ public class MyLoanActivity extends AppCompatActivity {
         loanModels=new ArrayList<>();
 
         f_btn=findViewById(R.id.f_add);
-        edit_btn=findViewById(R.id.edit);
 
-//        edit_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getApplicationContext(),EditLoanActivity.class));
-//            }
-//        });
 
         f_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,8 +87,10 @@ public class MyLoanActivity extends AppCompatActivity {
 
                                        for (DataSnapshot ds:dataSnapshot.getChildren()){
                                            ruser=""+ds.child("username").getValue();
+                                           url=""+ds.child("image").getValue();
 
-                                           loanModel=new LoanModel(ruser,amount,image);
+
+                                           loanModel=new LoanModel(ruser,amount,url);
                                            loanModels.add(loanModel);
 
 
