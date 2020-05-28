@@ -79,6 +79,7 @@ public class MyLoanActivity extends AppCompatActivity {
                      mail=""+ds.child("rUser").getValue();
                      final String amount=""+ds.child("amount").getValue();
                      final String image=""+ds.child("image").getValue();
+                     final String purpose=""+ds.child("purpose").getValue();
 
                          DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Users");
                          reference.orderByChild("email").equalTo(mail).addValueEventListener(new ValueEventListener() {
@@ -90,7 +91,7 @@ public class MyLoanActivity extends AppCompatActivity {
                                            url=""+ds.child("image").getValue();
 
 
-                                           loanModel=new LoanModel(ruser,amount,url);
+                                           loanModel=new LoanModel(ruser,amount,url,purpose);
                                            loanModels.add(loanModel);
 
 

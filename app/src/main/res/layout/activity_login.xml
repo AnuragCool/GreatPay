@@ -76,13 +76,14 @@
 
         <TextView
             android:id="@+id/forgot_password"
-            android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forgot password?"
+            android:layout_margin="5dp"
             android:fontFamily="@font/regular"
+            android:text="Forgot password?"
             android:textColor="#3f72af"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            app:fontFamily="@font/regular" />
 
         <ProgressBar
             android:layout_width="wrap_content"

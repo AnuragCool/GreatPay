@@ -38,7 +38,7 @@ public class AddLoanActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     String state ="not found";
-    private EditText Lusername,amount;
+    private EditText Lusername,amount,purpose;
     private Button add,cancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class AddLoanActivity extends AppCompatActivity {
         amount=findViewById(R.id.loanam);
         add=findViewById(R.id.save);
         cancel=findViewById(R.id.cancel);
+        purpose=findViewById(R.id.loan_pur);
 
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +64,7 @@ public class AddLoanActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String pur=purpose.getText().toString().trim();
                 final String luser=Lusername.getText().toString().trim();
                 final String amounts=amount.getText().toString().trim();
                 if(luser.isEmpty()){
@@ -112,6 +114,7 @@ public class AddLoanActivity extends AppCompatActivity {
                         hashMap.put("rUser",luser);
                         hashMap.put("amount",amounts);
                         hashMap.put("image",url);
+                        hashMap.put("purpose",pur);
                         reference1.child("loan").push().setValue(hashMap);
                         finish();
                     }

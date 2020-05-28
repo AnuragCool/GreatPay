@@ -22,8 +22,8 @@
         <activity android:name=".AddLoanActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ForgotPassword" android:screenOrientation="portrait"/>
         <activity android:name=".SettingsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".AboutUsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".HomePage" android:screenOrientation="portrait">
+        <activity android:name=".AboutUsActivity" android:theme="@style/AppTheme2" android:screenOrientation="portrait"/>
+        <activity android:name=".HomePage" android:theme="@style/AppTheme2" android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".RegisterActivity" android:screenOrientation="portrait"/>
@@ -35,6 +35,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

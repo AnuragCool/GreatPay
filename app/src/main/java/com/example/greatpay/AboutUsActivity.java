@@ -15,9 +15,7 @@ public class AboutUsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-         copy=findViewById(R.id.copy);
-         String res=getResources().getString(R.string.COPY);
-         copy.setText(res);
+
 
 
     }

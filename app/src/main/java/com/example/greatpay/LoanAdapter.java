@@ -45,6 +45,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder>{
 
         holder.tvUsername.setText(""+mData.get(position).getrUser());
         holder.tvMoney.setText(""+mData.get(position).getAmount());
+        holder.Tvpur.setText(""+mData.get(position).getPurpose());
 
         Glide.with(mcontext).load(mData.get(position).getImage()).placeholder(R.drawable.profile).into(holder.imageView);
     }
@@ -57,7 +58,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder>{
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvUsername, tvMoney;
+        TextView tvUsername, tvMoney,Tvpur;
         CircleImageView imageView;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -66,6 +67,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder>{
             tvUsername=itemView.findViewById(R.id.username_loan);
             tvMoney=itemView.findViewById(R.id.money);
             imageView=itemView.findViewById(R.id.img);
+            Tvpur=itemView.findViewById(R.id.purpose);
         }
 
     }
