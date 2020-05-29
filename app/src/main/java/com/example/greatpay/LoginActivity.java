@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,6 +19,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -76,11 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(Password.length()<8){
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(LoginActivity.this,"Password too short",Toast.LENGTH_SHORT).show();
-                }
-
 
 
                 firebaseAuth.signInWithEmailAndPassword(Email, Password)
@@ -94,9 +94,16 @@ public class LoginActivity extends AppCompatActivity {
                                     finish();
                                 }
                                 else {
-
-                                    Toast.makeText(getApplicationContext(),"Login failed or User not available",Toast.LENGTH_SHORT).show();
-
+                                    try {
+                                        throw task.getException();
+                                    } catch(FirebaseAuthWeakPasswordException e) {
+                                        Toast.makeText(LoginActivity.this, "Weak Password", Toast.LENGTH_SHORT).show();
+                                    } catch(FirebaseAuthInvalidCredentialsException e) {
+                                        Toast.makeText(LoginActivity.this, "Wrong Password.Try Again!!", Toast.LENGTH_SHORT).show();
+                                    }catch (FirebaseAuthInvalidUserException e){
+                                        Toast.makeText(LoginActivity.this, "This account is not Registered", Toast.LENGTH_SHORT).show();
+                                    } catch(Exception e) {
+                                    }
 
                                 }
                             }

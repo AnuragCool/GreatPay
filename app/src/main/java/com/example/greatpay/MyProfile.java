@@ -49,6 +49,7 @@ import java.util.UUID;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.graphics.Color.parseColor;
+import static com.example.greatpay.R.drawable.add;
 import static com.example.greatpay.R.drawable.profile_edittext;
 import static com.example.greatpay.R.drawable.register_edittext;
 
@@ -65,8 +66,8 @@ public class MyProfile extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference storageReference;
     private ImageView select;
+    private TextView emailtv,mobileTv,AddresTv;
     private CircleImageView imageView;
-    private EditText name,username,mobile,emailTv,address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,16 +80,13 @@ public class MyProfile extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        name=findViewById(R.id.pro_name);
-        mobile=findViewById(R.id.pro_phone);
-        emailTv=findViewById(R.id.pro_email);
-        address=findViewById(R.id.pro_address);
+        emailtv=findViewById(R.id.emailId);
         edit=findViewById(R.id.edit_profile);
-        update=findViewById(R.id.btn_update);
         nameTv=findViewById(R.id.nme);
         select=findViewById(R.id.selection);
         imageView=findViewById(R.id.p_images);
-        update.setVisibility(View.GONE);
+        mobileTv=findViewById(R.id.mobile);
+        AddresTv=findViewById(R.id.address);
         ref= FirebaseDatabase.getInstance().getReference("Users");
 
 
@@ -124,55 +122,54 @@ public class MyProfile extends AppCompatActivity {
 
 
 
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                state="Not";
-
-                final String addresss=address.getText().toString().trim();
-                final String Name=name.getText().toString().trim();
-                final String phone=mobile.getText().toString().trim();
-                final String UserName=username.getText().toString().trim();
-
-
-
-                            HashMap<String,Object> hashMap=new HashMap<>();
-                            hashMap.put("address",addresss);
-                            hashMap.put("name",Name);
-                            hashMap.put("phone",phone);
-                            ref.child(user.getUid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(MyProfile.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                            Drawable d = getResources().getDrawable(profile_edittext);
-                            name.setEnabled(false);
-                            address.setEnabled(false);
-                            mobile.setEnabled(false);
-                            selected=false;
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                name.setBackground(d);
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                address.setBackground(d);
-                            }
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                mobile.setBackground(d);
-                            }
-                            edit.setText("Edit Profile");
-                            edit.setTextColor(Color.WHITE);
-                            update.setVisibility(View.GONE);
-                            loadProfile();
-
-
-
-
-
-            }
-        });
+//        update.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                state="Not";
+//
+//                final String addresss=address.getText().toString().trim();
+//                final String Name=name.getText().toString().trim();
+//                final String phone=mobile.getText().toString().trim();
+//                final String UserName=username.getText().toString().trim();
+//
+//
+//
+//                            HashMap<String,Object> hashMap=new HashMap<>();
+//                            hashMap.put("address",addresss);
+//                            hashMap.put("name",Name);
+//                            hashMap.put("phone",phone);
+//                            ref.child(user.getUid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<Void> task) {
+//                                    if(task.isSuccessful()){
+//                                        Toast.makeText(MyProfile.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                            });
+//                            Drawable d = getResources().getDrawable(profile_edittext);
+//                            name.setEnabled(false);
+//                            address.setEnabled(false);
+//                            mobile.setEnabled(false);
+//                            selected=false;
+//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                                name.setBackground(d);
+//                            }
+//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                                address.setBackground(d);
+//                            }
+//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                                mobile.setBackground(d);
+//                            }
+//                            edit.setText("Edit Profile");
+//                            edit.setTextColor(Color.WHITE);
+//                            loadProfile();
+//
+//
+//
+//
+//
+//            }
+//        });
 
         loadProfile();
 
@@ -181,52 +178,47 @@ public class MyProfile extends AppCompatActivity {
 
 
 
-
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(selected){
-                    Drawable d = getResources().getDrawable(profile_edittext);
-                    name.setEnabled(false);
-                    address.setEnabled(false);
-                    mobile.setEnabled(false);
-                    selected=false;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        name.setBackground(d);
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        address.setBackground(d);
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        mobile.setBackground(d);
-                    }
-                    edit.setText("Edit Profile");
-                    edit.setTextColor(Color.WHITE);
-                    update.setVisibility(View.GONE);
-                    loadProfile();
-
-                }else {
-                    Drawable d = getResources().getDrawable(register_edittext);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        name.setBackground(d);
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        address.setBackground(d);
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        mobile.setBackground(d);
-                    }
-                    name.setEnabled(true);
-                    address.setEnabled(true);
-                    mobile.setEnabled(true);
-                    edit.setText("Cancel");
-                    edit.setTextColor(Color.RED);
-                    selected = true;
-                    update.setVisibility(View.VISIBLE);
-                }
-
-            }
-        });
+//
+//        edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(selected){
+//                    Drawable d = getResources().getDrawable(profile_edittext);
+//                    selected=false;
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                        name.setBackground(d);
+//                    }
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                        address.setBackground(d);
+//                    }
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                        mobile.setBackground(d);
+//                    }
+//                    edit.setText("Edit Profile");
+//                    edit.setTextColor(Color.WHITE);
+//                    loadProfile();
+//
+//                }else {
+//                    Drawable d = getResources().getDrawable(register_edittext);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                        name.setBackground(d);
+//                    }
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                        address.setBackground(d);
+//                    }
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                        mobile.setBackground(d);
+//                    }
+//                    name.setEnabled(true);
+//                    address.setEnabled(true);
+//                    mobile.setEnabled(true);
+//                    edit.setText("Cancel");
+//                    edit.setTextColor(Color.RED);
+//                    selected = true;
+//                }
+//
+//            }
+//        });
     }
 
     private void loadProfile() {
@@ -240,15 +232,16 @@ public class MyProfile extends AppCompatActivity {
                     String addrs=""+ds2.child("address").getValue();
                     String url=""+ds2.child("image").getValue();
 
-                    name.setText(namee);
-                    emailTv.setText(email);
-                    mobile.setText(phone);
+
+                    mobileTv.setText(phone);
+                    AddresTv.setText(addrs);
+                    emailtv.setText(email);
                     nameTv.setText(namee);
 
                     Log.d("url", "onDataChange: "+url);
 
                     if(!addrs.isEmpty()){
-                        address.setText(addrs);
+//                        address.setText(addrs);
                     }
                     if(!url.isEmpty()){
                         Glide.with(getApplicationContext()).load(url).placeholder(R.drawable.profile).into(imageView);

@@ -8,10 +8,13 @@ import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -32,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HomePage extends AppCompatActivity  {
 
     DrawerLayout drawerLayout;
@@ -42,12 +48,12 @@ public class HomePage extends AppCompatActivity  {
     FirebaseUser user;
     TextView em, na;
     DatabaseReference ref;
+    CircleImageView imageView;
     FloatingActionButton floatingActionButton;
     String my_Uid;
 
-    private CardView my_loan, profile, settings, summary;
+    private CardView my_loan, profile, settings, summary,collection;
     View hView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +61,38 @@ public class HomePage extends AppCompatActivity  {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        imageView=findViewById(R.id.profile1);
+        summary=findViewById(R.id.card1);
+        summary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),SummaryActivity.class));
+            }
+        });
+
+        settings=findViewById(R.id.card6);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        collection=findViewById(R.id.card4);
+        collection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),CollectionActivity.class));
+            }
+        });
+
         floatingActionButton=findViewById(R.id.signout);
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
         checkUser();
+        loadProfile();
 
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +118,7 @@ public class HomePage extends AppCompatActivity  {
 
         if (user != null) {
 ////            my_Uid=user.getUid();
-////            ref= FirebaseDatabase.getInstance().getReference("Users");
+            ref= FirebaseDatabase.getInstance().getReference("Users");
 ////            ref.orderByChild("uId").equalTo(my_Uid).addValueEventListener(new ValueEventListener() {
 ////                @Override
 ////                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -115,18 +147,12 @@ public class HomePage extends AppCompatActivity  {
             }
         });
 
-        settings = findViewById(R.id.card3);
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomePage.this, SettingsActivity.class));
-            }
-        });
-
-        profile = findViewById(R.id.card4);
+        profile = findViewById(R.id.card2);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                ActivityOptions options =new ActivityOptions.makeSceneTransitionAnimation(this,
+//                        Pair.create(v,"profileImage"));
                 startActivity(new Intent(HomePage.this, MyProfile.class));
             }
         });
@@ -135,7 +161,7 @@ public class HomePage extends AppCompatActivity  {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomePage.this, SummaryActivity.class));
+                startActivity(new Intent(HomePage.this, SettingsActivity.class));
             }
         });
 
@@ -160,6 +186,7 @@ public class HomePage extends AppCompatActivity  {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mymenu,menu);
         return true;
+
     }
 
     @Override
@@ -169,6 +196,31 @@ public class HomePage extends AppCompatActivity  {
                 startActivity(new Intent(HomePage.this,AboutUsActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void loadProfile() {
+        ref= FirebaseDatabase.getInstance().getReference("Users");
+
+        ref.orderByChild("uId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                for(DataSnapshot ds2: dataSnapshot1.getChildren()){
+
+                    String url=""+ds2.child("image").getValue();
+
+
+                    Log.d("url", "onDataChange: "+url);
+
+                        Glide.with(getApplicationContext()).load(url).placeholder(R.drawable.profile1).into(imageView);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
 

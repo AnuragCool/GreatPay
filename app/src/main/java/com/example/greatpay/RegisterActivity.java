@@ -149,7 +149,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                                              }else{
-                                                 Toast.makeText(RegisterActivity.this, "Not registered Successfully", Toast.LENGTH_SHORT).show();
+                                                 String exception=""+task.getException();
+                                                 String modifiedExe=exception.replace("com.google.firebase.auth.FirebaseAuthUserCollisionException:","");
+                                                 Toast.makeText(RegisterActivity.this, modifiedExe, Toast.LENGTH_LONG).show();
 
                                              }
 

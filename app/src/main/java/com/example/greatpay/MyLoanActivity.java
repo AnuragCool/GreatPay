@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +34,7 @@ public class MyLoanActivity extends AppCompatActivity {
     private List<LoanModel> loanModels;
     private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
-    String mail,ruser;
+    String mail,ruser,namee,url1;
     String url;
     private FirebaseUser user;
     private LoanAdapter loanAdapter;
@@ -46,7 +47,11 @@ public class MyLoanActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         user=mAuth.getCurrentUser();
         recyclerView=findViewById(R.id.recycler_loan);
+
+        getSupportActionBar().setTitle("My Loans");
         loanModels=new ArrayList<>();
+
+
 
         f_btn=findViewById(R.id.f_add);
 
@@ -73,46 +78,14 @@ public class MyLoanActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 loanModels.clear();
 
-
-
                  for(DataSnapshot ds:dataSnapshot.getChildren()){
-                     mail=""+ds.child("rUser").getValue();
-                     final String amount=""+ds.child("amount").getValue();
-                     final String image=""+ds.child("image").getValue();
-                     final String purpose=""+ds.child("purpose").getValue();
-
-                         DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Users");
-                         reference.orderByChild("email").equalTo(mail).addValueEventListener(new ValueEventListener() {
-                             @Override
-                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                       for (DataSnapshot ds:dataSnapshot.getChildren()){
-                                           ruser=""+ds.child("name").getValue();
-                                           url=""+ds.child("image").getValue();
-
-
-                                           loanModel=new LoanModel(ruser,amount,url,purpose);
-                                           loanModels.add(loanModel);
-
-
-
-
-                                       }
-                                 loanAdapter=new LoanAdapter(MyLoanActivity.this,loanModels);
-                                 recyclerView.setAdapter(loanAdapter);
-                             }
-
-                             @Override
-                             public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                             }
-                         });
-
-
-
+                  loanModel=ds.getValue(LoanModel.class);
+                  loanModels.add(loanModel);
 
 
                  }
+                 loanAdapter=new LoanAdapter(MyLoanActivity.this,loanModels);
+                 recyclerView.setAdapter(loanAdapter);
 
 
             }
@@ -122,5 +95,23 @@ public class MyLoanActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("on", "onResume: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("on", "onStart: ");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("on", "onPause: ");
     }
 }

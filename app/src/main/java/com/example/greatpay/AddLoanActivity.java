@@ -34,10 +34,9 @@ import java.util.HashMap;
 public class AddLoanActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    String url;
-
-    private Toolbar toolbar;
+    String url,url1,namee,name2;
     String state ="not found";
+    String pUid;
     private EditText Lusername,amount,purpose;
     private Button add,cancel;
     @Override
@@ -52,6 +51,26 @@ public class AddLoanActivity extends AppCompatActivity {
         add=findViewById(R.id.save);
         cancel=findViewById(R.id.cancel);
         purpose=findViewById(R.id.loan_pur);
+
+
+
+
+        DatabaseReference ref1=FirebaseDatabase.getInstance().getReference("Users");
+        ref1.orderByChild("uId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                for(DataSnapshot ds2: dataSnapshot1.getChildren()){
+                    namee=""+ds2.child("name").getValue();
+                    url1=""+ds2.child("image").getValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -85,14 +104,11 @@ public class AddLoanActivity extends AppCompatActivity {
                                 String username = "" + ds.child("email").getValue();
                                 Log.d("name", "checkRuserName: " + username);
                                 if (luser.equals(username)) {
-                                    Log.d("test", "onDataChange: true");
                                     url=""+ds.child("image").getValue();
-                                    Log.d("urll", "checkRuserName: " + url);
+                                    name2=""+ds.child("name").getValue();
+                                    pUid=""+ds.child("uId").getValue();
                                     state="found";
-                                    Log.d("got", "onDataChange: got executed");
-
                                     break;
-
                                 }
                             }
                             if(!state.equals("found")){
@@ -103,31 +119,34 @@ public class AddLoanActivity extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
                         }
                     });
                     if(state.equals("found")){
+                        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("Users/"+pUid);
+                        HashMap<String,Object> hashMap1=new HashMap<>();
+                        hashMap1.put("amount",amounts);
+                        hashMap1.put("rname",namee);
+                        hashMap1.put("remail",user.getEmail());
+                        hashMap1.put("image",url1);
+                        hashMap1.put("pUid",pUid);
+                        databaseReference.child("collection").push().setValue(hashMap1);
+
+
                         Log.d("got", "onDataChange: executed");
 
                         DatabaseReference reference1 =FirebaseDatabase.getInstance().getReference("Users/"+user.getUid());
                         HashMap<String,Object> hashMap =new HashMap<>();
                         hashMap.put("rUser",luser);
+                        hashMap.put("name",name2);
                         hashMap.put("amount",amounts);
                         hashMap.put("image",url);
                         hashMap.put("purpose",pur);
                         reference1.child("loan").push().setValue(hashMap);
                         finish();
                     }
-
-
-
-
                 }
             }
         });
-
-
-
     }
 
     public void hideKeyboard(View v) {

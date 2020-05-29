@@ -3,7 +3,7 @@ package com.example.greatpay;
 
 public class LoanModel {
 
-    private String rUser,amount,image,purpose;
+    private String rUser,amount,image,purpose,name;
 
 
     public String getrUser() {
@@ -30,11 +30,20 @@ public class LoanModel {
         this.image = image;
     }
 
-    public LoanModel(String rUser, String amount, String image,String purpose) {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LoanModel(String rUser, String amount, String image, String purpose, String name) {
         this.rUser = rUser;
         this.amount = amount;
         this.image = image;
-        this.purpose=purpose;
+        this.purpose = purpose;
+        this.name = name;
     }
 
     public String getPurpose() {

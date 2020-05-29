@@ -43,9 +43,10 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull LoanAdapter.MyViewHolder holder, int position) {
 
-        holder.tvUsername.setText(""+mData.get(position).getrUser());
+        holder.tvUsername.setText(""+mData.get(position).getName());
         holder.tvMoney.setText(""+mData.get(position).getAmount());
         holder.Tvpur.setText(""+mData.get(position).getPurpose());
+        holder.emailTv.setText(""+mData.get(position).getrUser());
 
         Glide.with(mcontext).load(mData.get(position).getImage()).placeholder(R.drawable.profile).into(holder.imageView);
     }
@@ -58,7 +59,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder>{
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvUsername, tvMoney,Tvpur;
+        TextView tvUsername, tvMoney,Tvpur,emailTv;
         CircleImageView imageView;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -68,6 +69,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.MyViewHolder>{
             tvMoney=itemView.findViewById(R.id.money);
             imageView=itemView.findViewById(R.id.img);
             Tvpur=itemView.findViewById(R.id.purpose);
+            emailTv=itemView.findViewById(R.id.emailt);
         }
 
     }
