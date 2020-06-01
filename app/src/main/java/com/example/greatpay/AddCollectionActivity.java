@@ -2,60 +2,49 @@ package com.example.greatpay;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-public class AddLoanActivity extends AppCompatActivity {
+public class AddCollectionActivity extends AppCompatActivity {
+
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     String url,url1,namee,name2;
     String state ="not found";
     String pUid;
-    private EditText Lusername,amount,purpose;
+    private EditText C_username,C_amount,C_purpose;
     private Button add,cancel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_loan);
+        setContentView(R.layout.activity_add_collection);
 
         mAuth=FirebaseAuth.getInstance();
         user=mAuth.getCurrentUser();
-        Lusername=findViewById(R.id.luser);
-        amount=findViewById(R.id.loanam);
-        add=findViewById(R.id.save);
-        cancel=findViewById(R.id.cancel);
-        purpose=findViewById(R.id.loan_pur);
+        C_username=findViewById(R.id.ruser_c);
+        C_amount=findViewById(R.id.coll_amount);
+        add=findViewById(R.id.c_save);
+        cancel=findViewById(R.id.c_cancel);
+        C_purpose=findViewById(R.id.coll_pur);
 
 
-
-
-        DatabaseReference ref1=FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference ref1= FirebaseDatabase.getInstance().getReference("Users");
         ref1.orderByChild("uId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
@@ -72,7 +61,6 @@ public class AddLoanActivity extends AppCompatActivity {
         });
 
 
-
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,16 +71,16 @@ public class AddLoanActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pur=purpose.getText().toString().trim();
-                final String luser=Lusername.getText().toString().trim();
-                final String amounts=amount.getText().toString().trim();
-                if(luser.isEmpty()){
-                    Lusername.setError("Enter Recipient username");
-                    Lusername.setFocusable(true);
+                String pur=C_purpose.getText().toString().trim();
+                final String ruser=C_username.getText().toString().trim();
+                final String amounts=C_amount.getText().toString().trim();
+                if(ruser.isEmpty()){
+                    C_username.setError("Enter Recipient username");
+                    C_username.setFocusable(true);
 
                 }else if(amounts.isEmpty()){
-                    amount.setError("Enter the amount");
-                    amount.setFocusable(true);
+                    C_amount.setError("Enter the amount");
+                    C_amount.setFocusable(true);
 
                 }
                 else{
@@ -103,18 +91,17 @@ public class AddLoanActivity extends AppCompatActivity {
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 String username = "" + ds.child("email").getValue();
                                 Log.d("name", "checkRuserName: " + username);
-                                if (luser.equals(username)) {
+                                if (ruser.equals(username)) {
                                     url=""+ds.child("image").getValue();
                                     name2=""+ds.child("name").getValue();
                                     pUid=""+ds.child("uId").getValue();
                                     state="found";
-                                    Log.d("sec", "onClick: on st=found");
                                     break;
                                 }
                             }
                             if(!state.equals("found")){
-                                Lusername.setError("User don't Exists!");
-                                Lusername.setFocusable(true);
+                                C_username.setError("User don't Exists!");
+                                C_username.setFocusable(true);
                             }
                         }
 
@@ -122,34 +109,53 @@ public class AddLoanActivity extends AppCompatActivity {
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
                     });
-                    Log.d("sec", "onClick: after st=found");
                     if(state.equals("found")){
-
+                        DatabaseReference reference1 =FirebaseDatabase.getInstance().getReference("Users/"+user.getUid());
                         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("Users/"+pUid);
-                        String key=databaseReference.child("loan").push().getKey();
+                        String key=reference1.child("collection").push().getKey();
                         HashMap<String,Object> hashMap1=new HashMap<>();
                         hashMap1.put("amount",amounts);
-                        hashMap1.put("rname",namee);
-                        hashMap1.put("remail",user.getEmail());
+                        hashMap1.put("name",namee);
+                        hashMap1.put("rUser",user.getEmail());
                         hashMap1.put("image",url1);
+                        hashMap1.put("pUid",user.getUid());
+                        hashMap1.put("key",databaseReference.child("loan").push().getKey());
                         hashMap1.put("commonkey",key);
-                        hashMap1.put("bUid",user.getUid());
-                        hashMap1.put("key",key);
-                        databaseReference.child("collection").child(key).setValue(hashMap1);
+
+
+
+
+                        databaseReference.child("loan").child(key).setValue(hashMap1);
+
+                        HashMap<String,Object> hashMap2=new HashMap<>();
+                        hashMap2.put("key",key);
+                        hashMap2.put("name",namee);
+                        hashMap2.put("nSenderUid",user.getUid());
+                        hashMap2.put("amount",amounts);
+                        hashMap2.put("type","loan");
+
+
+                        databaseReference.child("notification").child(key).setValue(hashMap2);
 
 
                         Log.d("got", "onDataChange: executed");
 
-                        DatabaseReference reference1 =FirebaseDatabase.getInstance().getReference("Users/"+user.getUid());
+
                         HashMap<String,Object> hashMap =new HashMap<>();
-                        hashMap.put("rUser",luser);
-                        hashMap.put("name",name2);
+                        hashMap.put("remail",ruser);
+                        hashMap.put("rname",name2);
                         hashMap.put("amount",amounts);
                         hashMap.put("image",url);
                         hashMap.put("purpose",pur);
-                        hashMap.put("pUid",pUid);
+                        hashMap.put("key",key);
+                        hashMap.put("bUid",pUid);
                         hashMap.put("commonkey",key);
-                        reference1.child("loan").child(key).setValue(hashMap);
+                        reference1.child("collection").child(key).setValue(hashMap);
+
+
+
+
+
                         finish();
                     }
                 }

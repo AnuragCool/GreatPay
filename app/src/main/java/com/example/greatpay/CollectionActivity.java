@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +30,7 @@ public class CollectionActivity extends AppCompatActivity {
     private CollectionModel collectionModel;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    FloatingActionButton floatingActionButton;
     String hisUid,amount;
     String mail,ruser,url;
     private List<CollectionModel> collectionModelList;
@@ -35,6 +39,11 @@ public class CollectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
+        floatingActionButton=findViewById(R.id.c_add);
+
+
+
+
 
 
         getSupportActionBar().setTitle("My Collections");
@@ -50,6 +59,13 @@ public class CollectionActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CollectionActivity.this,AddCollectionActivity.class));
+            }
+        });
+
 
         load();
     }
@@ -64,26 +80,29 @@ public class CollectionActivity extends AppCompatActivity {
                 collectionModelList.clear();
 
 
-
-
                 for(DataSnapshot ds:dataSnapshot.getChildren()){
 
+                    String status=""+ds.child("status").getValue();
+                    if(!status.equals("collected")){
+                        collectionModel=ds.getValue(CollectionModel.class);
+                        collectionModelList.add(collectionModel);
+
+                    }
 
 
 
 
-                                collectionModel=ds.getValue(CollectionModel.class);
-                                collectionModelList.add(collectionModel);
 
 
-
-                            collectionAdapter=new CollectionAdapter(CollectionActivity.this,collectionModelList);
-                            recyclerView.setAdapter(collectionAdapter);
 
 
 
 
                 }
+                collectionAdapter=new CollectionAdapter(CollectionActivity.this,collectionModelList);
+                recyclerView.setAdapter(collectionAdapter);
+                collectionAdapter.notifyDataSetChanged();
+
 
 
             }

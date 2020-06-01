@@ -5,11 +5,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -52,7 +55,7 @@ public class HomePage extends AppCompatActivity  {
     FloatingActionButton floatingActionButton;
     String my_Uid;
 
-    private CardView my_loan, profile, settings, summary,collection;
+    private CardView my_loan, profile, settings, summary,collection,notification;
     View hView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,18 @@ public class HomePage extends AppCompatActivity  {
         setSupportActionBar(toolbar);
 
         imageView=findViewById(R.id.profile1);
+        notification=findViewById(R.id.card3);
         summary=findViewById(R.id.card1);
+
+
+
+
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),NotificationActivity.class));
+            }
+        });
         summary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,12 +112,30 @@ public class HomePage extends AppCompatActivity  {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user = mAuth.getCurrentUser();
-                mAuth.signOut();
-                checkUser();
+
+
+                MaterialAlertDialogBuilder builder=new MaterialAlertDialogBuilder(HomePage.this);
+                builder.setMessage("Are you sure want to Logout?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        user = mAuth.getCurrentUser();
+                        mAuth.signOut();
+                        checkUser();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
+
 
             }
         });
+
 
 
         CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
@@ -151,9 +183,16 @@ public class HomePage extends AppCompatActivity  {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ActivityOptions options =new ActivityOptions.makeSceneTransitionAnimation(this,
-//                        Pair.create(v,"profileImage"));
-                startActivity(new Intent(HomePage.this, MyProfile.class));
+                Intent intent=new Intent(HomePage.this, MyProfile.class);
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+
+                    Bundle bundle=ActivityOptions.makeSceneTransitionAnimation(HomePage.this,imageView,"profileImage").toBundle();
+                    startActivity(intent,bundle);
+                }else {
+                    startActivity(intent);
+                }
+
             }
         });
 

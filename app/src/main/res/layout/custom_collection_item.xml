@@ -99,7 +99,7 @@
                         android:text="Delete"
                         android:textColor="#fff"
                         android:layout_weight="1"
-                        android:id="@+id/delete"
+                        android:id="@+id/deletec"
                         android:textSize="14sp"
                         android:layout_marginLeft="15dp"
                         android:padding="5dp"/>

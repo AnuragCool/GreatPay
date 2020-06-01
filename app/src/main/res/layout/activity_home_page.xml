@@ -35,6 +35,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
+                    android:transitionName="appImage"
                     android:src="@drawable/money"/>
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
@@ -53,7 +54,7 @@
         android:tint="#ffffff"
         app:layout_anchor="@id/appbarLayout"
         app:layout_anchorGravity="bottom|right"
-        android:backgroundTint="#E60000"
+        android:backgroundTint="#ffffff"
         android:layout_marginRight="30dp"/>
 
         <androidx.core.widget.NestedScrollView
@@ -77,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+
             android:orientation="horizontal"
             android:gravity="center">
 

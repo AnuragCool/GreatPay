@@ -66,14 +66,15 @@
            android:layout_gravity="center"
                 android:textColor="@color/white"
            android:textSize="16sp"
+                android:drawableLeft="@drawable/email"
            android:fontFamily="@font/mont"
            android:id="@+id/emailId"/>
             <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
            android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_phone"
            android:layout_gravity="center"
-
 
                 android:textColor="@color/white"
            android:textSize="16sp"
@@ -84,6 +85,7 @@
           android:layout_height="wrap_content"
            android:layout_marginTop="5dp"
            android:layout_gravity="center"
+                android:drawableLeft="@drawable/ic_location"
 
                 android:textColor="@color/white"
            android:textSize="16sp"
