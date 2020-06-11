@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,6 +40,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -67,6 +73,15 @@ public class HomePage extends AppCompatActivity  {
         imageView=findViewById(R.id.profile1);
         notification=findViewById(R.id.card3);
         summary=findViewById(R.id.card1);
+        floatingActionButton=findViewById(R.id.floataction);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+
+        checkUser();
+
+
 
 
 
@@ -100,41 +115,42 @@ public class HomePage extends AppCompatActivity  {
             }
         });
 
-        floatingActionButton=findViewById(R.id.signout);
+      floatingActionButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              user = mAuth.getCurrentUser();
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-
-        checkUser();
-        loadProfile();
-
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                MaterialAlertDialogBuilder builder=new MaterialAlertDialogBuilder(HomePage.this);
-                builder.setMessage("Are you sure want to Logout?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        user = mAuth.getCurrentUser();
-                        mAuth.signOut();
-                        checkUser();
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
+              MaterialAlertDialogBuilder builder=new MaterialAlertDialogBuilder(HomePage.this);
+              builder.setMessage("Are you sure want to Logout?");
+              builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                      user = mAuth.getCurrentUser();
+                      mAuth.signOut();
+                      checkUser();
 
 
-            }
-        });
+
+
+
+                  }
+              });
+              builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                      FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(HomePage.this, new OnSuccessListener<InstanceIdResult>() {
+                          @Override
+                          public void onSuccess(InstanceIdResult instanceIdResult) {
+                              String token = instanceIdResult.getToken();
+                              Log.i("FCM Token", token);
+                              updateToken(token);
+                          }
+                      });
+                  }
+              });
+              builder.show();
+          }
+      });
 
 
 
@@ -149,6 +165,18 @@ public class HomePage extends AppCompatActivity  {
 
 
         if (user != null) {
+            loadProfile();
+
+
+
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(HomePage.this, new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String token = instanceIdResult.getToken();
+                    Log.i("FCM Token", token);
+                    updateToken(token);
+                }
+            });
 ////            my_Uid=user.getUid();
             ref= FirebaseDatabase.getInstance().getReference("Users");
 ////            ref.orderByChild("uId").equalTo(my_Uid).addValueEventListener(new ValueEventListener() {
@@ -215,6 +243,11 @@ public class HomePage extends AppCompatActivity  {
                 finish();
                 Toast.makeText(getApplicationContext(), "Please verify your email", Toast.LENGTH_SHORT).show();
             }
+            SharedPreferences sp=getSharedPreferences("SP_USER",MODE_PRIVATE);
+            SharedPreferences.Editor editor=sp.edit();
+            editor.putString("Current_USERID",user.getUid());
+            editor.apply();
+
         } else {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
@@ -261,6 +294,13 @@ public class HomePage extends AppCompatActivity  {
             }
         });
     }
+    private void updateToken(String s) {
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens");
+        HashMap<String,Object> hashMap=new HashMap<>();
+        hashMap.put("token",s);
+        reference.child(user.getUid()).setValue(hashMap);
+    }
+
 }
 
 

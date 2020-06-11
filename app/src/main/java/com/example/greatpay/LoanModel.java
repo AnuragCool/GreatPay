@@ -3,9 +3,9 @@ package com.example.greatpay;
 
 public class LoanModel {
 
-    private String rUser,amount,image,purpose,name,pUid,commonkey;
+    private String rUser,amount,image,purpose,name,pUid,commonkey,status,myname;
 
-    public LoanModel(String rUser, String amount, String image, String purpose, String name, String pUid, String commonkey) {
+    public LoanModel(String rUser, String amount, String image, String purpose, String name, String pUid, String commonkey,String status,String myname) {
         this.rUser = rUser;
         this.amount = amount;
         this.image = image;
@@ -13,6 +13,24 @@ public class LoanModel {
         this.name = name;
         this.pUid = pUid;
         this.commonkey = commonkey;
+        this.status=status;
+        this.myname=myname;
+    }
+
+    public String getMyname() {
+        return myname;
+    }
+
+    public void setMyname(String myname) {
+        this.myname = myname;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getrUser() {

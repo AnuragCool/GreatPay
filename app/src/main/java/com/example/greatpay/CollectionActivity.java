@@ -83,7 +83,7 @@ public class CollectionActivity extends AppCompatActivity {
                 for(DataSnapshot ds:dataSnapshot.getChildren()){
 
                     String status=""+ds.child("status").getValue();
-                    if(!status.equals("collected")){
+                    if(!status.equals("collected") && !status.equals("notVerified")){
                         collectionModel=ds.getValue(CollectionModel.class);
                         collectionModelList.add(collectionModel);
 

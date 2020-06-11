@@ -91,7 +91,7 @@ The Money Lender store all records related to you lend or borrows and help to re
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="If you have any suggestions or queries about this application, contact at ssimran20agt@gmail.com"
+            android:text="If you have any suggestions or queries about this application, contact at anuragcooldavkh@gmail.com"
             android:textSize="16sp"
             android:textColor="#328DAA"
             android:layout_marginLeft="10dp"

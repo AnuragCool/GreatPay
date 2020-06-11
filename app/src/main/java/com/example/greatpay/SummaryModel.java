@@ -3,15 +3,24 @@ package com.example.greatpay;
 
 public class SummaryModel {
 
-    private String name,amount,status,email;
+    private String name,amount,status,email,time;
 
 
     public SummaryModel() {
     }
 
-    public SummaryModel(String name, String amount) {
+    public SummaryModel(String name, String amount,String time) {
         this.name = name;
         this.amount = amount;
+        this.time=time;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getName() {

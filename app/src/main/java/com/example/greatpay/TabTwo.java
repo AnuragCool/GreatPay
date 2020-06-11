@@ -38,6 +38,8 @@ public class TabTwo extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_summary_);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
 
         summaryModelList=new ArrayList<>();
@@ -58,12 +60,14 @@ public class TabTwo extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 summaryModelList.clear();
+                summaryModelList.clear();
                 for(DataSnapshot ds:dataSnapshot.getChildren()){
                     String name=""+ds.child("rname").getValue();
                     String amount=""+ds.child("amount").getValue();
                     String status=""+ds.child("status").getValue();
+                    String time=""+ds.child("time").getValue();
                     if(status.equals("collected")){
-                        summaryModel=new SummaryModel("collected from "+name,"₹"+amount);
+                        summaryModel=new SummaryModel("collected from "+name,"₹"+amount,time);
                         summaryModelList.add(summaryModel);
 
                     }

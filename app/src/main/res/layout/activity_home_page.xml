@@ -49,7 +49,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/signout"
+        android:id="@+id/floataction"
         android:src="@drawable/ic_exit"
         android:tint="#ffffff"
         app:layout_anchor="@id/appbarLayout"

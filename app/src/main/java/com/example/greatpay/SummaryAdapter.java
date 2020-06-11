@@ -40,6 +40,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.MySViewH
 
         holder.tvUsername.setText(""+mData.get(position).getName());
         holder.tvMoney.setText(""+mData.get(position).getAmount());
+        holder.timeTv.setText(""+mData.get(position).getTime());
     }
 
     @Override
@@ -50,13 +51,15 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.MySViewH
 
     public static class MySViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvUsername, tvMoney;
+        TextView tvUsername, tvMoney,timeTv;
 
         public MySViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvUsername=itemView.findViewById(R.id.name_summary);
             tvMoney=itemView.findViewById(R.id.money_summary);
+            timeTv= itemView.findViewById(R.id.time);
+
         }
 
     }

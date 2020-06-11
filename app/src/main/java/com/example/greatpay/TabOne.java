@@ -38,6 +38,8 @@ public class TabOne extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_summary);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
 
         summaryModelList=new ArrayList<>();
@@ -54,12 +56,14 @@ public class TabOne extends Fragment {
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    summaryModelList.clear();
                     for(DataSnapshot ds:dataSnapshot.getChildren()){
                         String name=""+ds.child("name").getValue();
                         String amount=""+ds.child("amount").getValue();
                         String status=""+ds.child("status").getValue();
+                        String time=""+ds.child("time").getValue();
                         if(status.equals("paid")){
-                            summaryModel=new SummaryModel("paid to "+name,"₹"+amount);
+                            summaryModel=new SummaryModel("paid to "+name,"₹"+amount,time);
                             summaryModelList.add(summaryModel);
                         }
                         summaryAdapter=new SummaryAdapter(getActivity(),summaryModelList);

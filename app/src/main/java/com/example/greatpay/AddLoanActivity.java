@@ -135,6 +135,7 @@ public class AddLoanActivity extends AppCompatActivity {
                         hashMap1.put("commonkey",key);
                         hashMap1.put("bUid",user.getUid());
                         hashMap1.put("key",key);
+                        hashMap1.put("status","");
                         databaseReference.child("collection").child(key).setValue(hashMap1);
 
 
@@ -148,7 +149,9 @@ public class AddLoanActivity extends AppCompatActivity {
                         hashMap.put("image",url);
                         hashMap.put("purpose",pur);
                         hashMap.put("pUid",pUid);
+                        hashMap.put("myname",namee);
                         hashMap.put("commonkey",key);
+                        hashMap.put("status","verified");
                         reference1.child("loan").child(key).setValue(hashMap);
                         finish();
                     }

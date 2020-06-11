@@ -80,7 +80,7 @@ public class MyLoanActivity extends AppCompatActivity {
 
                  for(DataSnapshot ds:dataSnapshot.getChildren()){
                      String status=""+ds.child("status").getValue();
-                     if(!status.equals("paid")){
+                     if(!status.equals("paid") && !status.equals("")){
                          loanModel=ds.getValue(LoanModel.class);
                          loanModels.add(loanModel);
                      }
