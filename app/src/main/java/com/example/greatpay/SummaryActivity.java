@@ -50,6 +50,7 @@ public class SummaryActivity extends AppCompatActivity implements TabLayout.OnTa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
+        overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_null);
 
         Toolbar toolbar =findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,6 +79,7 @@ public class SummaryActivity extends AppCompatActivity implements TabLayout.OnTa
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {}
+
 
 }
 

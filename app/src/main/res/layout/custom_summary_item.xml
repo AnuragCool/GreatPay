@@ -44,5 +44,6 @@
         android:text="time"
         android:id="@+id/time"
         android:paddingRight="5dp"
+        android:textSize="12sp"
         android:layout_gravity="right"/>
 </LinearLayout>

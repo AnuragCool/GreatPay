@@ -41,7 +41,8 @@ public class AddCollectionActivity extends AppCompatActivity {
     String url,url1,namee,name2;
     String state ="not found";
     String pUid;
-    String amounts;
+    String amounts, pur;
+    String TAG="race";
     private Sender sender;
     private RequestQueue requestQueue;
     private EditText C_username,C_amount,C_purpose;
@@ -94,7 +95,7 @@ public class AddCollectionActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pur=C_purpose.getText().toString().trim();
+                pur=C_purpose.getText().toString().trim();
                 final String ruser=C_username.getText().toString().trim();
                 amounts=C_amount.getText().toString().trim();
                 if(ruser.isEmpty()){
@@ -108,7 +109,7 @@ public class AddCollectionActivity extends AppCompatActivity {
                 }
                 else{
                     final DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users");
-                    reference.addValueEventListener(new ValueEventListener() {
+                    reference.orderByChild("email").equalTo(ruser).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -119,12 +120,17 @@ public class AddCollectionActivity extends AppCompatActivity {
                                     name2=""+ds.child("name").getValue();
                                     pUid=""+ds.child("uId").getValue();
                                     state="found";
+
                                     break;
+
                                 }
+
                             }
                             if(!state.equals("found")){
                                 C_username.setError("User don't Exists!");
                                 C_username.setFocusable(true);
+                                Log.d(TAG, "onDataChange: 2");
+
                             }
                         }
 
@@ -132,7 +138,8 @@ public class AddCollectionActivity extends AppCompatActivity {
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
                     });
-                    if(state.equals("found")){
+                    if(state.equals("found") ){
+                        Log.d(TAG, "onDataChange: 3");
                         DatabaseReference reference1 =FirebaseDatabase.getInstance().getReference("Users/"+user.getUid());
                         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("Users/"+pUid);
                         String key=reference1.child("collection").push().getKey();
@@ -161,6 +168,7 @@ public class AddCollectionActivity extends AppCompatActivity {
                         hashMap2.put("status","");
                         hashMap2.put("myname",name2);
                         hashMap2.put("time",pTime);
+                        hashMap2.put("purpose",pur);
                         hashMap2.put("type","loan");
 
 
@@ -179,10 +187,11 @@ public class AddCollectionActivity extends AppCompatActivity {
                         hashMap.put("key",key);
                         hashMap.put("bUid",pUid);
                         hashMap.put("status","");
+                        hashMap.put("myname",namee);
                         hashMap.put("commonkey",key);
                         reference1.child("collection").child(key).setValue(hashMap);
-                        
-                        
+
+
                         sendNotification(pUid);
 
 
@@ -206,7 +215,14 @@ public class AddCollectionActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds:dataSnapshot.getChildren()){
                     Token token=ds.getValue(Token.class);
-                    Data data =new Data(user.getUid(),"Have you taken ₹ "+amounts+" from "+namee+" ?","Loan Verification",hisUid);
+                    Data data;
+                    if(pur==""){
+                         data =new Data(user.getUid(),"Have you taken ₹ "+amounts+" from "+namee+" ?","Loan Verification",hisUid);
+                    }
+                    else{
+                        data =new Data(user.getUid(),"Have you taken ₹ "+amounts+" from "+namee+" for "+pur+" ?","Loan Verification",hisUid);
+                    }
+
 
                     Sender sender=new Sender(data,token.getToken());
 

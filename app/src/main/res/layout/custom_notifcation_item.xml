@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="5dp"
-    android:paddingBottom="-5dp"
+    android:paddingBottom="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,7 +10,6 @@
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="5dp"
     android:padding="5dp"
         android:elevation="10dp">
         <LinearLayout
@@ -65,7 +63,7 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="35dp"
             android:background="@drawable/button_border"
             android:text="YES"
             android:id="@+id/yes"
@@ -74,7 +72,7 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="35dp"
             android:background="@drawable/button_border"
             android:text="NO"
             android:textColor="#fff"
@@ -87,8 +85,9 @@
             android:layout_height="wrap_content"
                 android:text="time"
                 android:id="@+id/timeNoti"
-            android:layout_gravity="right"
-            android:paddingRight="5dp"
+            android:textSize="10sp"
+            android:layout_gravity="left"
+            android:padding="5dp"
                 />
         </LinearLayout>
 </androidx.cardview.widget.CardView>

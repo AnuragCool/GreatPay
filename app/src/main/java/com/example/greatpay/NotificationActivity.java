@@ -31,6 +31,7 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_null);
 
         getSupportActionBar().setTitle("Notifications");
 
@@ -68,11 +69,12 @@ public class NotificationActivity extends AppCompatActivity {
                     String status=""+ds.child("status").getValue();
                     String myname=""+ds.child("myname").getValue();
                     String time=""+ds.child("time").getValue();
+                    String purpose=""+ds.child("purpose").getValue();
 
 
 
                     if(!status.equals("responded")){
-                        notificationModel=new NotificationModel(type,name,amount,sUid,key,myname,time);
+                        notificationModel=new NotificationModel(type,name,amount,sUid,key,myname,time,purpose);
                         notificationModelList.add(notificationModel);
                     }
 
@@ -88,4 +90,5 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
     }
+
 }

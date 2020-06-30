@@ -39,6 +39,7 @@ public class CollectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
+        overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_null);
         floatingActionButton=findViewById(R.id.c_add);
 
 
@@ -113,5 +114,6 @@ public class CollectionActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

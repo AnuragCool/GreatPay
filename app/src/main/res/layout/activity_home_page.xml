@@ -23,7 +23,7 @@
                 app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
                 app:contentScrim="@color/colorPrimaryDark"
-                app:title="@string/app_name">
+                app:title="Money Tracker">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
@@ -62,6 +62,7 @@
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
             android:fillViewport="true"
+            android:paddingTop="10dp"
 
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >

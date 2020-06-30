@@ -63,7 +63,7 @@ public class TabOne extends Fragment {
                         String status=""+ds.child("status").getValue();
                         String time=""+ds.child("time").getValue();
                         if(status.equals("paid")){
-                            summaryModel=new SummaryModel("paid to "+name,"₹"+amount,time);
+                            summaryModel=new SummaryModel("paid to "+name,"₹ "+amount,time);
                             summaryModelList.add(summaryModel);
                         }
                         summaryAdapter=new SummaryAdapter(getActivity(),summaryModelList);

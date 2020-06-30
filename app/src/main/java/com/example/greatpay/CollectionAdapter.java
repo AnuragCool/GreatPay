@@ -2,6 +2,7 @@ package com.example.greatpay;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +34,10 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,7 +47,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
     private Context mcontext;
     private List<CollectionModel> mData;
     private FirebaseUser user;
-    String uid;
+    String uid,myname;
 
     public CollectionAdapter(Context mcontext, List<CollectionModel> mData) {
         this.mcontext = mcontext;
@@ -70,10 +73,15 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
         holder.tvUsername.setText(""+mData.get(position).getRname());
         holder.tvMoney.setText(""+mData.get(position).getAmount());
         holder.emailTv.setText(""+mData.get(position).getRemail());
+        holder.purpose.setText(""+mData.get(position).getPurpose());
 
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String timestamp = String.valueOf(System.currentTimeMillis());
+                Calendar calendar =Calendar.getInstance(Locale.getDefault());
+                calendar.setTimeInMillis(Long.parseLong(timestamp));
+                final String pTime= DateFormat.format("dd/MM/yyyy hh:mm aa",calendar).toString();
                 final String key=""+mData.get(position).getKey();
                 final String hisemail=""+mData.get(position).getRemail();
                 final String hisUid=""+mData.get(position).getbUid();
@@ -85,6 +93,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot ds:dataSnapshot.getChildren()){
                            uid=""+ds.child("uId").getValue();
+                           myname=""+ds.child("name").getValue();
 
                         }
 
@@ -95,15 +104,17 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
 
                     }
                 });
-                Toast.makeText(mcontext, "I got Clicked"+position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mcontext, "I got Clicked"+position, Toast.LENGTH_SHORT).show();
                 Log.d("on", "onClick: "+uid+" "+key);
                 DatabaseReference reference2= FirebaseDatabase.getInstance().getReference("Users/"+hisUid+"/loan/"+key);
                 HashMap<String,Object> hashMap=new HashMap<>();
                 hashMap.put("status","paid");
+                hashMap.put("time",pTime);
                 reference2.updateChildren(hashMap);
                 DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users/"+user.getUid()+"/collection/"+key);
                 HashMap<String,Object> hashMap1=new HashMap<>();
                 hashMap1.put("status","collected");
+                hashMap1.put("time",pTime);
                 reference.updateChildren(hashMap1);
 
 
@@ -130,7 +141,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
 
     public static class MyCViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvUsername, tvMoney,emailTv;
+        TextView tvUsername, tvMoney,emailTv,purpose;
         CircleImageView imageView;
         Button delete,remind;
 
@@ -143,6 +154,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
             emailTv=itemView.findViewById(R.id.email_collection);
             delete=itemView.findViewById(R.id.deletec);
             remind=itemView.findViewById(R.id.remind);
+            purpose=itemView.findViewById(R.id.purpose);
         }
 
     }
@@ -156,7 +168,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds:dataSnapshot.getChildren()){
                     Token token=ds.getValue(Token.class);
-                    Data data =new Data(user.getUid(),"Hey %=name% is asking for his Money","Loan Remainder",hisUid);
+                    Data data =new Data(user.getUid(),"Hey "+mData.get(position).getMyname()+" is asking for his Money Rs."+mData.get(position).getAmount(),"Loan Remainder",hisUid);
 
                     Sender sender=new Sender(data,token.getToken());
 

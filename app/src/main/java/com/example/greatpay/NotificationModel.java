@@ -1,9 +1,9 @@
 package com.example.greatpay;
 
 public class NotificationModel  {
-    private   String type, Email,Money,sUid,key,myname,time;
+    private   String type, Email,Money,sUid,key,myname,time,purpose;
 
-    public NotificationModel(String type, String email, String money,String sUid,String key,String myname,String time) {
+    public NotificationModel(String type, String email, String money,String sUid,String key,String myname,String time,String purpose) {
         this.type = type;
         Email = email;
         Money = money;
@@ -11,6 +11,15 @@ public class NotificationModel  {
         this.key=key;
         this.myname=myname;
         this.time=time;
+        this.purpose=purpose;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 
     public String getTime() {

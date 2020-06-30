@@ -43,7 +43,9 @@ public class MyLoanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_my_loan);
+        overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_null);
         mAuth=FirebaseAuth.getInstance();
         user=mAuth.getCurrentUser();
         recyclerView=findViewById(R.id.recycler_loan);
@@ -119,4 +121,5 @@ public class MyLoanActivity extends AppCompatActivity {
         super.onPause();
         Log.d("on", "onPause: ");
     }
+
 }

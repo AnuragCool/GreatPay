@@ -97,6 +97,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
         if((""+mData.get(position).getType()).equals("loan")){
             holder.tvQues.setText("Have you taken ₹");
+            if(!(""+mData.get(position).getPurpose()).equals("")){
+                holder.tvEmail.setText("from "+mData.get(position).getEmail()+" for "+""+mData.get(position).getPurpose()+" ?");
+            }
         }
         if((""+mData.get(position).getType()).equals("declined")){
             holder.tvQues.setText(""+mData.get(position).getEmail()+" declined your collecion Request of ₹"+""+mData.get(position).getMoney());
@@ -250,7 +253,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                             e.printStackTrace();
                         }
                     }else{
-                        Data data =new Data(user.getUid(),mData.get(position).getMyname()+" didn't received the payed amount of "+mData.get(position).getMoney(),"Declined the Loan",hisUid);
+                        Data data =new Data(user.getUid(),mData.get(position).getMyname()+" didn't received the payed amount of "+mData.get(position).getMoney(),"Money not Recived",hisUid);
                         Sender sender=new Sender(data,token.getToken());
 
                         try {

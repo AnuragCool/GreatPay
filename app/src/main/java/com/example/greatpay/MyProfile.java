@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -61,7 +62,6 @@ public class MyProfile extends AppCompatActivity {
     private Uri filePath;
     private String email,username1,phone,namee,url,addrs;
     boolean selected =false;
-    private Button update;
     String state,myusername;
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -72,6 +72,7 @@ public class MyProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+        overridePendingTransition(R.anim.anim_fade_in,R.anim.anim_null);
 
         mAuth=FirebaseAuth.getInstance();
         user=mAuth.getCurrentUser();
@@ -88,6 +89,16 @@ public class MyProfile extends AppCompatActivity {
         mobileTv=findViewById(R.id.mobile);
         AddresTv=findViewById(R.id.address);
         ref= FirebaseDatabase.getInstance().getReference("Users");
+
+
+
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyProfile.this,EditProfile.class));
+            }
+        });
 
 
 

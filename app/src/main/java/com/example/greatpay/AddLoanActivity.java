@@ -135,7 +135,9 @@ public class AddLoanActivity extends AppCompatActivity {
                         hashMap1.put("commonkey",key);
                         hashMap1.put("bUid",user.getUid());
                         hashMap1.put("key",key);
+                        hashMap1.put("purpose",pur);
                         hashMap1.put("status","");
+                        hashMap1.put("myname",name2);
                         databaseReference.child("collection").child(key).setValue(hashMap1);
 
 
