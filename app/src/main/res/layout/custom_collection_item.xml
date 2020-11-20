@@ -2,21 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="5dp"
     android:layout_width="match_parent"
+    android:layout_marginBottom="1dp"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="#3f72af"
         android:padding="5dp"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="15dp"
-            android:background="@drawable/back_1"
             android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="75dp"
@@ -36,8 +37,9 @@
                     android:text="Name"
                     android:id="@+id/name_collection"
                     android:paddingLeft="10dp"
+                    android:textStyle="bold"
                     android:fontFamily="@font/regular"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -46,13 +48,12 @@
                     android:id="@+id/email_collection"
                     android:paddingLeft="10dp"
                     android:fontFamily="@font/regular"
-                    android:textColor="#fff"
+                    android:textColor="#acacac"
                     android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:orientation="horizontal">
 
                 <TextView
@@ -61,7 +62,7 @@
                     android:text="Amount : ₹ "
                     android:textSize="16sp"
                     android:layout_marginLeft="10dp"
-                    android:textColor="#fff"
+                    android:textColor="#3A7C48"
                     />
 
 
@@ -71,33 +72,46 @@
                     android:text="500"
                     android:fontFamily="@font/regular"
                     android:id="@+id/collection_money"
-                    android:textColor="#fff"
+                    android:textColor="#3A7C48"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:padding="5dp"/>
+                    />
             </LinearLayout>
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/purpose"
-                    android:paddingBottom="5dp"
-                    android:text="-----"
-                    android:textColor="#C7C6C6"
-                    android:layout_marginLeft="15dp"
-                    />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Purpose : "
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#5D8D9F"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/purpose"
+                        android:text="-----"
+                        android:textColor="#5D8D9F"
+                        />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:background="@drawable/button_border"
+                        android:background="@drawable/white_button"
                         android:text="Collected"
-                        android:textColor="#fff"
+                        android:textColor="@color/accept"
                         android:layout_weight="1"
                         android:id="@+id/deletec"
                         android:textSize="14sp"
@@ -106,7 +120,7 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:background="@drawable/button_border"
+                        android:background="@drawable/reject_back"
                         android:text="REMIND"
                         android:id="@+id/remind"
                         android:layout_weight="1"
@@ -118,6 +132,22 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/mont"
+            android:textColor="#000"
+            android:id="@+id/status"
+            android:textSize="10sp"
+            android:text="status">
+
+        </TextView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>

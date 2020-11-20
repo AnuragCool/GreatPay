@@ -5,11 +5,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.example.greatpay"
-        minSdkVersion 16
+        applicationId 'com.darkmatter.greatpay'
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName '1.2'
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,15 +40,21 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
+    implementation 'com.shreyaspatil:EasyUpiPayment:2.2'
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.android.gms:play-services-ads:19.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.2.0'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.nex3z:notification-badge:0.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.daasuu:CountAnimationTextView:0.1.2'
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.basgeekball:awesome-validation:4.2'
 
     // Java language implementation
     implementation "androidx.preference:preference:$preference_version"
+    implementation 'com.google.firebase:firebase-ads:19.2.0'
 
 }

@@ -2,21 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="5dp"
     android:layout_width="match_parent"
+    android:layout_marginBottom="1dp"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="#3f72af"
         android:padding="5dp"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="15dp"
-            android:background="@drawable/back_1"
             android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="75dp"
@@ -33,11 +34,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="User Name"
                     android:id="@+id/username_loan"
                     android:paddingLeft="10dp"
                     android:fontFamily="@font/regular"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -46,22 +48,21 @@
                     android:id="@+id/emailt"
                     android:paddingLeft="10dp"
                     android:fontFamily="@font/regular"
-                    android:textColor="#fff"
+                    android:textColor="#ACACAC"
                     android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Amount :"
+                    android:text="Amount : ₹ "
                     android:textSize="16sp"
                     android:layout_marginLeft="10dp"
-                    android:textColor="#fff"
+                    android:textColor="#3A7C48"
                     />
 
 
@@ -71,33 +72,43 @@
                     android:text="500"
                     android:fontFamily="@font/regular"
                     android:id="@+id/money"
-                    android:textColor="#fff"
+                    android:textColor="#3A7C48"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:padding="5dp"/>
+                    />
             </LinearLayout>
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/purpose"
-                    android:paddingBottom="5dp"
-                    android:text="-----"
-                    android:textColor="#C7C6C6"
-                    android:layout_marginLeft="15dp"
-                    />
-
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Purpose : "
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#5D8D9F"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/purpose"
+                        android:text="-----"
+                        android:textColor="#5D8D9F"
+                        />
+                </LinearLayout>
                 <LinearLayout
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/button_panel"
                     android:orientation="horizontal">
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:background="@drawable/button_border"
+                        android:background="@drawable/white_blue_button"
                         android:text="Pay"
-                        android:textColor="#fff"
+                        android:textColor="#0044FF"
                         android:layout_weight="1"
                         android:id="@+id/payy"
                         android:textSize="14sp"
@@ -106,7 +117,7 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
-                        android:background="@drawable/button_border"
+                        android:background="@drawable/accept_back"
                         android:text="Paid"
                         android:id="@+id/paid"
                         android:layout_weight="1"
@@ -118,6 +129,22 @@
                 </LinearLayout>
 
             </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/mont"
+            android:visibility="gone"
+            android:textColor="#000"
+            android:padding="5dp"
+            android:id="@+id/status"
+            android:textSize="10sp"
+            android:text="status">
+
+        </TextView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

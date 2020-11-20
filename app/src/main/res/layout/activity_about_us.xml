@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:src="@drawable/money"
+            android:src="@drawable/customlogo"
             android:id="@+id/aboutuss"
             android:layout_gravity="center"/>
 
@@ -52,7 +52,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Great pay is a  simple money lender which will help to collect or pay in time by showing you the last pay details and pending amount."
+            android:text="This is a  simple money tracker App which help to keep record of the money that you have to pay or collect from someone."
             android:fontFamily="@font/regular"
             android:padding="1dp"
             android:textSize="16sp"
@@ -60,6 +60,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,9 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:text="The Money Lender shows the pending amount and all lend and borrow amount with person’s name and the date on which they took it.
-
-The Money Lender store all records related to you lend or borrows and help to remember."
+            android:text="We often take money from our friends or sometimes they take from us and most of us forget about it,so to resolve that issue I came up with this App. "
             android:fontFamily="@font/regular"
             android:padding="1dp"
             android:textColor="#328DAA"

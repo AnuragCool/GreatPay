@@ -12,8 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/colorPrimary">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,15 +50,7 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:id="@+id/nme1"
-            android:textColor="#fff"
-            android:layout_marginLeft="20dp"
-            android:gravity="start|left"
-            android:textSize="16sp"/>
+
 
     </LinearLayout>
 
@@ -111,12 +102,44 @@
                 android:layout_marginLeft="15dp"
                 android:inputType="text"
                 android:paddingLeft="10dp"
-                android:textColor="#fff"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:layout_marginRight="15dp"
                 android:textSize="16sp"
-                android:background="@drawable/profile_edittext"/>
+                android:background="@drawable/rounded_edittext"/> <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/person" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="Username"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/regular"
+                    android:textColor="#000"
+                    android:layout_marginLeft="8dp"
+                    />
+
+            </LinearLayout>
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                android:textSize="16sp"
+                android:background="@drawable/rounded_edittext"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,13 +169,12 @@
                 android:layout_height="35dp"
                 android:layout_marginLeft="15dp"
                 android:inputType="text"
-                android:textColor="#fff"
                 android:paddingLeft="10dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:layout_marginRight="15dp"
                 android:textSize="16sp"
-                android:background="@drawable/profile_edittext"/>
+                android:background="@drawable/rounded_edittext"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -184,12 +206,11 @@
                 android:inputType="textEmailAddress"
                 android:paddingLeft="10dp"
                 android:enabled="false"
-                android:textColor="#fff"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
                 android:layout_marginRight="15dp"
                 android:textSize="16sp"
-                android:background="@drawable/profile_edittext"/>
+                android:background="@drawable/rounded_edittext"/>
 
 
             <LinearLayout
@@ -220,13 +241,12 @@
                 android:layout_height="35dp"
                 android:layout_marginLeft="15dp"
                 android:inputType="text"
-                android:textColor="#fff"
                 android:layout_marginTop="8dp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:layout_marginRight="15dp"
                 android:textSize="16sp"
-                android:background="@drawable/profile_edittext"/>
+                android:background="@drawable/rounded_edittext"/>
 
 <LinearLayout
     android:layout_width="match_parent"

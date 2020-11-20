@@ -1,48 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
-        android:background="@color/colorPrimary"
+        android:background="#f7f7f7"
         android:id="@+id/rlayout"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context=".MyLoanActivity">
+    <include layout="@layout/no_loan"></include>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_loan"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="0dp" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_above="@+id/adView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.github.clans.fab.FloatingActionMenu
-            android:id="@+id/myloan_menu"
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/myloan_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/adView"
+        android:layout_alignParentRight="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu_colorNormal="@color/colorPrimaryDark"
+        app:menu_fab_size="normal"
+        app:menu_shadowColor="@color/colorPrimary"
+        app:menu_shadowRadius="4dp"
+        app:menu_shadowXOffset="1dp"
+        app:menu_shadowYOffset="3dp"
+        app:menu_showShadow="true">
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/f_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            app:menu_fab_size="normal"
-            app:menu_showShadow="true"
-            app:menu_colorNormal="#000"
-            app:menu_shadowColor="#000"
-            app:menu_shadowRadius="4dp"
-            app:menu_shadowXOffset="1dp"
-            app:menu_shadowYOffset="3dp">
+            android:src="@drawable/edit"
+            app:fab_colorNormal="#000"
+            app:fab_label="Add"
+            app:fab_size="mini" />
 
+    </com.github.clans.fab.FloatingActionMenu>
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/f_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/edit"
-                app:fab_colorNormal="#000"
-                app:fab_size="mini"
-                app:fab_label="Add" />
+<!--    <com.google.android.gms.ads.AdView-->
+<!--        android:id="@+id/adView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:background="@drawable/invite_back"-->
+<!--        app:adSize="BANNER"-->
+<!--        app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        tools:layout_editor_absoluteX="5dp"></com.google.android.gms.ads.AdView>-->
 
-        </com.github.clans.fab.FloatingActionMenu>
-
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:604472926092:android:48e24d514a9063b46b40a9",
         "android_client_info": {
-          "package_name": "com.example.greatpay"
+          "package_name": "com.darkmatter.greatpay"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "604472926092-inaujapunlae6llnqpm71mau60t5r92q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.greatpay",
+            "package_name": "com.darkmatter.greatpay",
             "certificate_hash": "d795f10708f5b16b7357d38d74f50ef450a28656"
           }
         },

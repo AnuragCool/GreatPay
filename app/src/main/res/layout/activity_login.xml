@@ -14,6 +14,11 @@
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/customlogo"
+            />
         <TextView
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
@@ -30,10 +35,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email ID"
-            android:textColorHint="#3f72af"
+            android:textColorHint="@color/colorPrimaryDark"
             android:textSize="16sp"
             android:padding="5dp"
-            android:drawableLeft="@drawable/email"
+            android:drawableLeft="@drawable/person"
             android:layout_marginRight="25dp"
             android:layout_marginLeft="25dp"
             android:textAlignment="center"
@@ -51,7 +56,7 @@
             android:textAlignment="center"
             android:textSize="16sp"
             android:padding="5dp"
-            android:textColorHint="#3f72af"
+            android:textColorHint="@color/colorPrimaryDark"
             android:background="@drawable/rounded_edittext"
             android:layout_marginRight="25dp"
             android:layout_marginLeft="25dp"

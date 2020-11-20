@@ -9,18 +9,18 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/img"
         android:layout_margin="10dp"
         android:transitionName="appImage"
-        android:src="@drawable/money"/>
+        android:src="@drawable/customlogo"/>
 
     <TextView
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Great Pay"
+        android:text="Money Tracker"
         android:fontFamily="@font/regular"
         android:textColor="@color/colorPrimary"
         android:textSize="24sp"

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
+
         android:orientation="vertical">
 
         <ImageView
@@ -47,12 +47,27 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/reg_name"
+            android:id="@+id/username"
             android:layout_marginRight="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
+            android:textColorHint="#3f72af"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:textAlignment="center"
+            android:padding="5dp"
+            android:background="@drawable/rounded_edittext"
+            android:textSize="16sp"/>
+
+        <EditText
+            android:id="@+id/reg_name"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:textColorHint="#3f72af"
             android:layout_height="wrap_content"
             android:hint="Full Name"
             android:textAlignment="center"
@@ -69,6 +84,7 @@
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="#3f72af"
             android:hint="Mobile Number"
             android:textAlignment="center"
             android:padding="5dp"
@@ -84,6 +100,7 @@
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="#3f72af"
             android:hint="Email ID"
             android:textAlignment="center"
             android:padding="5dp"
@@ -99,6 +116,7 @@
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="#3f72af"
             android:hint="Password"
             android:inputType="textPassword"
             android:textAlignment="center"
@@ -115,22 +133,13 @@
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="#3f72af"
             android:hint="Confirm Password"
             android:textAlignment="center"
             android:padding="5dp"
             android:inputType="textPassword"
             android:background="@drawable/rounded_edittext"
             android:textSize="16sp"/>
-
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:textColor="#53354a"
-            android:text="I agree to the Terms and Conditions and Privacy Policy" />
 
 
         <Button
